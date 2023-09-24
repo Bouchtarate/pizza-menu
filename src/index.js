@@ -8,14 +8,14 @@ const pizzaData = [
     ingredients: "Bread with italian olive oil and rosemary",
     price: 6,
     photoName: "pizzas/focaccia.jpg",
-    soldOut: false,
+    soldOut: true,
   },
   {
     name: "Pizza Margherita",
     ingredients: "Tomato and mozarella",
     price: 10,
     photoName: "pizzas/margherita.jpg",
-    soldOut: false,
+    soldOut: true,
   },
   {
     name: "Pizza Spinaci",
@@ -29,7 +29,7 @@ const pizzaData = [
     ingredients: "Tomato, mozarella, mushrooms, and onion",
     price: 12,
     photoName: "pizzas/funghi.jpg",
-    soldOut: false,
+    soldOut: true,
   },
   {
     name: "Pizza Salamino",
@@ -79,6 +79,7 @@ const Menu = () => {
               pizzaName={pizza.name}
               ingredients={pizza.ingredients}
               price={pizza.price}
+              soldOut={pizza.soldOut}
             />
           ))}
         </ul>
@@ -97,12 +98,12 @@ const Description = () => {
 
 const Pizza = ({ photoPath, pizzaName, ingredients, price, soldOut }) => {
   return (
-    <li className="pizza">
+    <li className={`pizza ${soldOut || "sold-out"}`}>
       <img src={photoPath} alt={pizzaName} />
       <div>
         <h3>{pizzaName}</h3>
         <p>{ingredients}</p>
-        <span>{price} $</span>
+        {soldOut ? <span>{price} $</span> : <span>SOLD OUT</span>}
       </div>
     </li>
   );
@@ -117,14 +118,15 @@ const Footer = () => {
   if (hours >= openHours && hours <= closeHours) {
     closeMsg = "We're open until 22:00. Come visit us or order online.";
   } else {
-    closeMsg = "closed";
+    closeMsg = "We're happy to welcome you between 12:00 and 22:00";
   }
 
   return (
     <footer className="footer">
-      <p className="order">{closeMsg}</p>
-
-      <button className="btn">Order Now</button>
+      <div className="order">
+        <p>{closeMsg}</p>
+        <button className="btn">Order Now</button>
+      </div>
     </footer>
   );
 };
